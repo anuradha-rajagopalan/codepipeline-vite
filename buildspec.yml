@@ -2,12 +2,25 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 16  # Change if you're using a different version of Node.js
     commands:
-      - npm install
+      echo Installing dependencies...
+      npm install
+
   build:
     commands:
-      - npm run build
+      echo Building the application...
+      npm run build  # Change if you're using a different build command
+
+  post_build:
+    commands:
+      echo Syncing files to S3...
+      aws s3 sync ./build s3://testpipeline-bucket --delete  # Change the build directory if needed
+
+      echo Invalidating CloudFront cache...
+      aws cloudfront create-invalidation --distribution-id https://d2tkzvtftvfjzk.cloudfront.net --paths "/*"  # Change if needed
+
 artifacts:
   files:
-    - '**/*'
-  base-directory: dist
+    - '**/*'  # If you want to include specific files, adjust this pattern
