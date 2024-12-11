@@ -23,4 +23,5 @@ phases:
 
 artifacts:
   files:
-    - '**/*'  # Adjust this pattern to include/exclude specific files
+    - dist/**/*  # Only include files from the dist folder
+  discard-paths: yes
