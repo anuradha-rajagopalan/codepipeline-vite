@@ -16,7 +16,7 @@ phases:
   post_build:
     commands:
       - echo Syncing files to S3...
-      #- aws s3 sync dist/ s3://testpipeline-bucket --delete  # Change the build directory if needed
+      - aws s3 sync dist/ s3://testpipeline-bucket --delete  # Change the build directory if needed
 
       - echo Invalidating CloudFront cache...
       - aws cloudfront create-invalidation --distribution-id E1DT61V259KDRE --paths "/*"  # Replace with your actual distribution ID
